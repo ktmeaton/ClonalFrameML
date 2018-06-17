@@ -68,6 +68,7 @@ int main (const int argc, const char* argv[]) {
 	string fasta_out_file = string(out_file) + ".ML_sequence.fasta";
 	string xref_out_file = string(out_file) + ".position_cross_reference.txt";
 	string import_out_file = string(out_file) + ".importation_status.txt";
+	string import_out_intervals_file = string(out_file) + ".importation_status_intervals.txt";
 	string em_out_file = string(out_file) + ".em.txt";
 	string emsim_out_file = string(out_file) + ".emsim.txt";
 	// Set default options
@@ -465,9 +466,15 @@ int main (const int argc, const char* argv[]) {
 				}
 			}
 			vout.close();
-			// Output the importation status
-			write_importation_status_intervals(is_imported,ctree_node_labels,isBLC,compat,import_out_file.c_str(),root_node,chr_name.c_str());
+
+			// Output the importations status
+			write_importation_status(is_imported,ctree_node_labels,isBLC,compat,import_out_file.c_str(),root_node);
+			
 			cout << "Wrote inferred importation status to " << import_out_file << endl;
+
+			// Output the importation status intervals
+			write_importation_status_intervals(is_imported,ctree_node_labels,isBLC,compat,import_out_intervals_file.c_str(),root_node,chr_name.c_str());
+			cout << "Wrote inferred importation status intervals to " << import_out_intervals_file << endl;
 			
 			// If required, simulate under the point estimates and output posterior samples of the parameters
 			if(emsim>0) {
@@ -547,9 +554,15 @@ int main (const int argc, const char* argv[]) {
 				}
 			}
 			vout.close();
+
 			// Output the importation status
-			write_importation_status_intervals(is_imported,ctree_node_labels,isBLC,compat,import_out_file.c_str(),root_node,chr_name.c_str());
+			write_importation_status(is_imported,ctree_node_labels,isBLC,compat,import_out_file.c_str(),root_node);
+
 			cout << "Wrote inferred importation status to " << import_out_file << endl;
+
+			// Output the importation status intervals 
+			write_importation_status_intervals(is_imported,ctree_node_labels,isBLC,compat,import_out_intervals_file.c_str(),root_node,chr_name.c_str());
+			cout << "Wrote inferred importation status intervals to " << import_out_intervals_file << endl;
 			
 			// If required, simulate under the point estimates and output posterior samples of the parameters
 			if(emsim>0) {
